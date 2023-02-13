@@ -42,6 +42,23 @@ def mano_inicial(jugador:list, mazo:list) -> None:
     for i in range(5):
         dar_carta(jugador,mazo)
         
+def crea_conteo(mano:list) -> dict:
+    d = {}
+    for carta in mano:
+        if carta[0] in d:
+            d[carta[0]]+=1
+        else:
+            d[carta[0]] = 1
+    
+    return d
+
+def carta_mayor(dconteo:dict) -> int:
+    return max(dconteo, key=lambda key: dconteo[key])
+    
+def asigna_joker(carta_mayor:int):
+    print("")
+    
+        
 
 def main():
     numeros = [f"{x}" for x in range (2,11)]
@@ -53,7 +70,7 @@ def main():
     for numero in numeros:
         for simbolo in simbolos:
             mazo.append([numero,simbolo])
-    joker = ["ඞ"]
+    joker = "ඞ"
     mazo.extend(joker)
     jugador = []
     computadora = []
@@ -65,6 +82,8 @@ def main():
     mano_inicial(computadora,mazo)
     print(f"La mano de la computadora es: {computadora}")
     print (f"Los puntos del jugador son {contar_puntos(computadora)} \n")
+    
+    asigna_joker(crea_conteo(computadora))
     
     
 if __name__ == "__main__":
