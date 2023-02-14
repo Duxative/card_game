@@ -146,8 +146,33 @@ def hay_ganador(jugador:list, computadora:list,turno:int) -> bool:
                 return True
             else:
                 return False
+
+def crear_mazo() -> list:
+    numeros = [f"{x}" for x in range (2,11)]
+    letras = ["J","Q","K","A"]
+    simbolos = ["♠︎","♥︎","♣︎","♦︎"]
+    numeros.extend(letras)
+    mazo = []
+    for numero in numeros:
+        for simbolo in simbolos:
+            mazo.append([numero,simbolo])
+    joker = "ඞ"
+    mazo.extend(joker)
+    return mazo
         
-def jugar_pares(jugador:list, computadora:list, mazo:list):
+def jugar_pares():
+    jugador = []
+    computadora = []
+    mazo = crear_mazo()
+    
+    mano_inicial(jugador,mazo)
+    print(f"La mano del jugador es : {jugador} ")
+    print (f"Los puntos del jugador son {contar_puntos(jugador)} \n")
+    
+    mano_inicial(computadora,mazo)
+    print(f"La mano de la computadora es: {computadora}")
+    print (f"Los puntos del jugador son {contar_puntos(computadora)} \n")
+    
     en_juego = True
     turno = 0
     while(en_juego):
@@ -155,7 +180,11 @@ def jugar_pares(jugador:list, computadora:list, mazo:list):
         print("--------------------------------")
         # No se puede ganar antes del turno 4 nomás para hacerlo más divertido
         if hay_ganador(jugador,computadora,turno):
-            break
+            respuesta = input("¿Deseas jugar otra partida?\n 1) Si \n 2) No \n Respuesta: ")
+            if respuesta == '1':
+                jugar_pares()
+            else:
+                break
         if turno % 2 == 0:
             cambiar_carta(jugador,mazo)
             if hay_joker(jugador):
@@ -170,33 +199,16 @@ def jugar_pares(jugador:list, computadora:list, mazo:list):
             print(f"La mano de la computadora es: {computadora}")
             print (f"Los puntos del jugador son {contar_puntos(computadora)} \n")
         if hay_ganador(jugador,computadora,turno):
-            break
+            respuesta = input("¿Deseas jugar otra partida?\n 1) Si \n 2) No \n Respuesta: ")
+            if respuesta == '1':
+               jugar_pares()
+            else:
+                break
         turno += 1
         
 
 def main():
-    numeros = [f"{x}" for x in range (2,11)]
-    letras = ["J","Q","K","A"]
-    simbolos = ["♠︎","♥︎","♣︎","♦︎"]
-    numeros.extend(letras)
-    mazo = []
-    for numero in numeros:
-        for simbolo in simbolos:
-            mazo.append([numero,simbolo])
-    joker = "ඞ"
-    mazo.extend(joker)
-    jugador = []
-    computadora = []
-    
-    mano_inicial(jugador,mazo)
-    print(f"La mano del jugador es : {jugador} ")
-    print (f"Los puntos del jugador son {contar_puntos(jugador)} \n")
-    
-    mano_inicial(computadora,mazo)
-    print(f"La mano de la computadora es: {computadora}")
-    print (f"Los puntos del jugador son {contar_puntos(computadora)} \n")
-    
-    jugar_pares(jugador,computadora,mazo)
+    jugar_pares()
     
 if __name__ == "__main__":
     main()
